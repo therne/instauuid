@@ -54,7 +54,7 @@ countNumber | Auto-incrementing sequence - to prevent conflicting  | 0 ~ 1023 | 
 #### Author: [Hyojun Kim](http://github.com/retail3210)
 
 [npm-image]: https://img.shields.io/npm/v/instauuid.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/mysql
+[npm-url]: https://npmjs.org/package/instauuid
 [node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.6-brightgreen.svg?style=flat-square
 [node-version-url]: http://nodejs.org/download/
 [downloads-image]: http://img.shields.io/npm/dm/instauuid.svg?style=flat-square
