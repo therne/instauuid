@@ -1,0 +1,25 @@
+{
+  "name": "instauuid",
+  "version": "1.0.0",
+  "description": "Instagram-style UUID Generator for Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/retail3210/instauuid.git"
+  },
+  "author": "vista",
+  "license": "MIT",
+  "gypfile": true,
+  "dependencies": {
+    "nan": "^1.6.1",
+    "node-int64": "^0.3.3"
+  },
+  "bugs": {
+    "url": "https://github.com/retail3210/instauuid/issues"
+  },
+  "homepage": "https://github.com/retail3210/instauuid"
+}
