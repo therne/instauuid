@@ -1,7 +1,12 @@
 # InstaUUID
 
-Instagram-Style Compact UUID generator for Node.js.<br>
+[![NPM Version][npm-image]][npm-url]
+[![Node.js Version][node-version-image]][node-version-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+
 See [Instagram Engineering Blog - Sharding IDs at Instagram](http://instagram-engineering.tumblr.com/post/10853187575/sharding-ids-at-instagram)
+
+Instagram-Style Compact UUID generator for Node.js.
 
 Generates 8-byte UUID that consists of:
 - 41 bits for time in milliseconds (we can use it until 2084/09/06 lunch time comes)
@@ -14,13 +19,15 @@ Benefits of this library:
 - **Compact Size** - The raw hash is only 8bytes, and Base64 hash is only 11 bytes!
 - **URL-Safe** - The default Base64 encoding does not contain URL-non-safe characters.
 
-To Install:
+## Installation
 ```
-npm install --save instauuid
+$ npm install --save instauuid
 ```
 
-Example usage:
-```javascript
+
+## Examples
+
+```js
 var instauuid = require('instauuid');
 
 instauuid(); // Default: Base64 - ex) pa1GN0wCWAA
@@ -31,7 +38,7 @@ instauuid('raw'); // Raw 8-byte (64bit) Hash.
 instauuid({ type: 'raw', additional: shardId, counter: 1022 });
 ```
 
-
+## Documentation
 ### instauuid(options)
 Generates and returns UUID.
 
@@ -45,3 +52,11 @@ countNumber | Auto-incrementing sequence - to prevent conflicting  | 0 ~ 1023 | 
 
 #### License: MIT
 #### Author: [Hyojun Kim](http://github.com/retail3210)
+
+[npm-image]: https://img.shields.io/npm/v/instauuid.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/mysql
+[node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.6-brightgreen.svg?style=flat-square
+[node-version-url]: http://nodejs.org/download/
+[downloads-image]: http://img.shields.io/npm/dm/instauuid.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/instauuid
+
