@@ -34,7 +34,9 @@ NAN_METHOD(Generate) {
         ? generate((WORD) args[0]->NumberValue(), (WORD) args[1]->NumberValue()) \
         : generate((WORD) args[0]->NumberValue());
 
-    NanReturnValue(NanNew<Number>(euid));
+    // pass it to buffer
+    auto buffer = NanNewBufferHandle((char*)(&euid), 8);
+    NanReturnValue(buffer);
 }
 
 void init(Handle<Object> exports) {

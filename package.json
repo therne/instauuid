@@ -1,6 +1,6 @@
 {
   "name": "instauuid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Instagram-style UUID Generator for Node",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,8 @@
   "license": "MIT",
   "gypfile": true,
   "dependencies": {
-    "nan": "^1.6.1",
-    "node-int64": "^0.3.3"
+    "long": "^2.2.3",
+    "nan": "^1.6.1"
   },
   "bugs": {
     "url": "https://github.com/retail3210/instauuid/issues"

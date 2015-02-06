@@ -30,13 +30,43 @@ $ npm install --save instauuid
 ```js
 var instauuid = require('instauuid');
 
-instauuid(); // Default: Base64 - ex) pa1GN0wCWAA
-instauuid('hash'); // Hex Hash - ex) a5ad42699204a800
-instauuid('raw'); // Raw 8-byte (64bit) Hash.
+instauuid(); // Default: Base64 - ex) "paZhL98FBXs"
+instauuid('hex'); // Hex String - ex) "a5afe16d768b4cdf"
+instauuid('decimal'); // Decimal String - ex) "11939009410687035132"
 
-// Or you can add some information to prevent hash conflicts. (recommend for big systems)
-instauuid({ type: 'raw', additional: shardId, counter: 1022 });
+// Using InstaUUID with MySQL
+// See "Integrating with your database" Section.
+var sql = 'INSERT INTO users (id, name) VALUES (??, ??)';
+sql = mysql.format(instauuid('decimal'), 'John Doe');
+
+// You can add some information to prevent hash conflicts. (recommended for big systems)
+instauuid({ type: 'hex', additional: shardId, countNumber: 1022 });
 ```
+
+## Integrating with your database
+
+### MySQL
+
+First, You need to set your primary key datatype to UNSIGNED BIGINT.
+```sql
+CREATE TABLE foo (
+   id   BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
+   ....
+);
+```
+
+#####[node-mysql](https://github.com/felixge/node-mysql/) Driver
+- Set 'supportBigNumbers', 'bigNumberStrings' options to true when connecting. 
+ - *This option makes you to read BIGINT as String, because UUID is too big that<br>JavaScript Number type cannot support. Number can handle up to 2^53 but we're using 2^64 range (Unsigned Int64)*
+- I recommend to use [Long]() or [bignumber.js]() Library when handling BIGINT data.
+- Use 'decimal' type when generating UUID. (See above example)
+
+### Redis
+Redis stores Integer as String, so you don't need to worry about anything.
+
+### MongoDB
+Just use MongoDB ObjectId.
+
 
 ## Documentation
 ### instauuid(options)
@@ -46,9 +76,22 @@ Generates and returns UUID.
 
 Option      | Description                                                  | Range | Default
 -------     | ------------------------------------------------------------ | ---- | ------
-type        | Return type of generated UUID. ('base64', 'hash', 'raw') | - | 'base64'
+type        | Return type of generated ID. See below for more details. | - | 'base64'
 additional  | Additional Unique Information (ex: Logical Shard ID) | 0 ~ 8191 | *(current time as μs)*
 countNumber | Auto-incrementing sequence - to prevent conflicting  | 0 ~ 1023 | *(Random)*
+
+##### Return types
+Name     | Description            | Type     |
+---------| ---                    | ---      |
+base64   | Base64 Hash (Note that this is not pure Base64. *We uses URL-Safe Base64URL*) | *String* |
+decimal  | Decimal **String**     | *String* |
+number   | *(Same as above)*        | -        |
+hex      | Hex String             | *String* |
+hash     | *(Same as above)*        | -        |
+long     | [Long](https://github.com/dcodeIO/Long.js) object | *Long* |
+buffer   | [Buffer](http://nodejs.org/api/buffer.html) object | *Buffer*|
+buffer_be| Big-Endian encoded buffer | *Buffer* |
+raw      | Raw ASCII Bytes - Don't recommend. | *String* |
 
 #### License: MIT
 #### Author: [Hyojun Kim](http://github.com/retail3210)
