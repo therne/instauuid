@@ -58,7 +58,7 @@ CREATE TABLE foo (
 #####[node-mysql](https://github.com/felixge/node-mysql/) Driver
 - Set 'supportBigNumbers', 'bigNumberStrings' options to true when connecting. 
  - *This option makes you to read BIGINT as String, because UUID is too big that<br>JavaScript Number type cannot support. Number can handle up to 2^53 but we're using 2^64 range (Unsigned Int64)*
-- I recommend to use [Long]() or [bignumber.js]() Library when handling BIGINT data.
+- I recommend to use [Long](https://github.com/dcodeIO/Long.js) or [bignumber.js](https://github.com/MikeMcl/bignumber.js/) Library when handling BIGINT data.
 - Use 'decimal' type when generating UUID. (See above example)
 
 ### Redis
