@@ -50,7 +50,7 @@ instauuid({ type: 'hex', additional: shardId, countNumber: 1022 });
 First, You need to set your primary key datatype to UNSIGNED BIGINT.
 ```sql
 CREATE TABLE foo (
-   id   BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
+   id   BIGINT UNSIGNED NOT NULL UNIQUE PRIMARY KEY,
    ....
 );
 ```
