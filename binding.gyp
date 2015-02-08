@@ -3,8 +3,7 @@
     {
       "target_name": "generator",
       "cflags": [
-        "-std=c++11",
-        "-stdlib=libc++"
+        "-std=c++0x"
       ],
       "conditions": [
         ["OS==\"mac\"", {
