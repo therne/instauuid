@@ -5,6 +5,7 @@
 #include <v8.h>
 #include <nan.h>
 using namespace v8;
+using namespace Nan;
 
 // Date starts 2015-01-01 
 #define EPOCH 1420038000000L
@@ -29,18 +30,17 @@ UINT64 generate(WORD counter, WORD additional=0) {
  * Method wrapping for node export.
  */
 NAN_METHOD(Generate) {
-    NanScope();
-    auto euid = args.Length() > 1 \
-        ? generate((WORD) args[0]->NumberValue(), (WORD) args[1]->NumberValue()) \
-        : generate((WORD) args[0]->NumberValue());
+    auto euid = info.Length() > 1 \
+        ? generate((WORD) info[0]->NumberValue(), (WORD) info[1]->NumberValue()) \
+        : generate((WORD) info[0]->NumberValue());
 
     // pass it to buffer
-    auto buffer = NanNewBufferHandle((char*)(&euid), 8);
-    NanReturnValue(buffer);
+    auto buffer = NewBuffer((char*)(&euid), 8);
+    info.GetReturnValue().Set(buffer.ToLocalChecked());
 }
 
 void init(Handle<Object> exports) {
-    exports->Set(NanNew<String>("generate"), NanNew<FunctionTemplate>(Generate)->GetFunction());
+    exports->Set(Nan::New("generate").ToLocalChecked(), Nan::New<FunctionTemplate>(Generate)->GetFunction());
 }
 
 NODE_MODULE(generator, init);
