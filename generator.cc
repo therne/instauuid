@@ -4,8 +4,13 @@
 #include <chrono>
 #include <v8.h>
 #include <nan.h>
-using namespace v8;
-using namespace Nan;
+
+using v8::String;
+using v8::FunctionTemplate;
+using Nan::GetFunction;
+using Nan::CopyBuffer;
+using Nan::New;
+using Nan::Set;
 
 // Date starts 2015-01-01 
 #define EPOCH 1420038000000L
@@ -30,17 +35,18 @@ UINT64 generate(WORD counter, WORD additional=0) {
  * Method wrapping for node export.
  */
 NAN_METHOD(Generate) {
-    auto euid = info.Length() > 1 \
-        ? generate((WORD) info[0]->NumberValue(), (WORD) info[1]->NumberValue()) \
-        : generate((WORD) info[0]->NumberValue());
+    UINT64 euid = info.Length() > 1 \
+        ? generate((WORD) info[0]->Uint32Value(), (WORD) info[1]->Uint32Value()) \
+        : generate((WORD) info[0]->Uint32Value());
 
     // pass it to buffer
-    auto buffer = NewBuffer((char*)(&euid), 8);
+    auto buffer = CopyBuffer((char*)(&euid), 8);
     info.GetReturnValue().Set(buffer.ToLocalChecked());
 }
 
-void init(Handle<Object> exports) {
-    exports->Set(Nan::New("generate").ToLocalChecked(), Nan::New<FunctionTemplate>(Generate)->GetFunction());
+NAN_MODULE_INIT(Init) {
+    Set(target, New<String>("generate").ToLocalChecked(),
+        GetFunction(New<FunctionTemplate>(Generate)).ToLocalChecked());
 }
 
-NODE_MODULE(generator, init);
+NODE_MODULE(generator, Init);
